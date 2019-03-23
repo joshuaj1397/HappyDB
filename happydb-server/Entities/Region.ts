@@ -1,12 +1,12 @@
 export class Region {
   private ID: number;
-  private Name: sting;
+  private Name: string;
 
   constructor(
     ID: number,
     Name: string
   ) {
-    this.ID = number;
-    this.Name = sting;
+    this.ID = ID;
+    this.Name = Name;
   }
 }

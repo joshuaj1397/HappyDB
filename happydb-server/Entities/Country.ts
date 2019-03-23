@@ -18,13 +18,13 @@ export class Country {
     GovTrust: number,
     DystopiaResidual: number
   ) {
-    this.ID = number;
-    this.RegionID = number;
-    this.Name = string;
-    this.HappinessRank = number;
-    this.GDP = number;
-    this.Freedom = number;
-    this.GovTrust = number;
-    this.DystopiaResidual = number;
+    this.ID = ID;
+    this.RegionID = RegionID;
+    this.Name = Name;
+    this.HappinessRank = HappinessRank;
+    this.GDP = GDP;
+    this.Freedom = Freedom;
+    this.GovTrust = GovTrust;
+    this.DystopiaResidual = DystopiaResidual;
   }
 }
