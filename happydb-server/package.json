@@ -1,0 +1,12 @@
+{
+  "name": "happydb-server",
+  "version": "1.0.0",
+  "description": "A server for serving up happy DB stuff!",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node server.js"
+  },
+  "author": "Joshua Johnson, Jospeh Wisor",
+  "license": "ISC"
+}
