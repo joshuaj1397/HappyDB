@@ -2,11 +2,14 @@ const express = require('express')
 const app = express()
 const port = 3005
 
-const Sequelize = require('sequelize');
+const Connection = require('tedious').Connection;
 
-const database = process.env.database;
-const dbUsername = process.env.dbUsername;
-const dbPassword = process.env.dbPassword;
+const config = {
+  server = process.env.server;
+  database = process.env.database;
+  dbUsername = process.env.dbUsername;
+  dbPassword = process.env.dbPassword;
+}
 
 app.get('/', (req, res) => res.send('Hello World'))
 
