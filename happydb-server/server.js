@@ -27,13 +27,31 @@ var config = {
 app.get('/', (req, res) => res.send('Hello World'));
 app.get('/mutateData', (req, res) => { mutate.readCountries() });
 
+function pruneCountryRegion(data) {
+    data.forEach(function (column) {
+        for (prop in column) { 
+            delete column[prop].metadata
+        }
+    })
+    return data[0].Name
+}
+
+function pruneData(data) {
+    data.forEach(function (column) {
+        for (prop in column) { 
+            delete column[prop].metadata
+        }
+    })
+    return data[0]
+}
+
 // get 2015data by country name
 app.get('/2015data/:countryName', function (req, res) {
-    dataPromise = execSql(`SELECT * FROM HappyData WHERE DataYear = 2017 AND countryId IN (SELECT ID FROM Country WHERE Name = '${req.params.countryName}')`);
+    dataPromise = execSql(`SELECT * FROM HappyData WHERE DataYear = 2015 AND countryId IN (SELECT ID FROM Country WHERE Name = '${req.params.countryName}')`);
     dataPromise.then(function (result) {
-        data = result;
-        console.log(data)
-        res.send(data)
+        data = pruneData(result);
+        cb = res.send.bind(res)
+        cb({data})
     }, function (err) {
         console.log(err);
     })
@@ -41,11 +59,11 @@ app.get('/2015data/:countryName', function (req, res) {
 
 // get 2016data by country name
 app.get('/2016data/:countryName', function (req, res) {
-    dataPromise = execSql(`SELECT * FROM HappyData WHERE DataYear = 2017 AND countryId IN (SELECT ID FROM Country WHERE Name = '${req.params.countryName}')`);
+    dataPromise = execSql(`SELECT * FROM HappyData WHERE DataYear = 2016 AND countryId IN (SELECT ID FROM Country WHERE Name = '${req.params.countryName}')`);
     dataPromise.then(function (result) {
-        data = result;
-        console.log(data)
-        res.send(data)
+        data = pruneData(result);
+        cb = res.send.bind(res)
+        cb({data})
     }, function (err) {
         console.log(err);
     })
@@ -55,9 +73,9 @@ app.get('/2016data/:countryName', function (req, res) {
 app.get('/2017data/:countryName', function (req, res) {
     dataPromise = execSql(`SELECT * FROM HappyData WHERE DataYear = 2017 AND countryId IN (SELECT ID FROM Country WHERE Name = '${req.params.countryName}')`);
     dataPromise.then(function (result) {
-        data = result;
-        console.log(data)
-        res.send(data)
+        data = pruneData(result);
+        cb = res.send.bind(res)
+        cb({data})
     }, function (err) {
         console.log(err);
     })
@@ -67,9 +85,9 @@ app.get('/2017data/:countryName', function (req, res) {
 app.get('/country/:countryId', function (req, res) {
     dataPromise = execSql(`SELECT Name FROM Country WHERE ID = '${req.params.countryId}'`)
     dataPromise.then(function (result) {
-        data = result;
-        console.log(data)
-        res.send(data)
+        data = pruneCountryRegion(result);
+        cb = res.send.bind(res)
+        cb({data})
     }, function (err) {
         console.log(err);
     })
@@ -79,9 +97,9 @@ app.get('/country/:countryId', function (req, res) {
 app.get('/region/:regionId', function (req, res) {
     dataPromise = execSql(`SELECT Name FROM Region WHERE ID = '${req.params.regionId}'`)
     dataPromise.then(function (result) {
-        data = result;
-        console.log(data)
-        res.send(data)
+        data = pruneCountryRegion(result);
+        cb = res.send.bind(res)
+        cb({data})
     }, function (err) {
         console.log(err);
     })
@@ -95,15 +113,12 @@ function execSql(sqlString) {
     return new Promise(function (resolve, reject) {
         console.log(sqlString)
         var connection = new Connection(config);
-        var response;
         var request = new Request(sqlString, function (err, rowCount, rows) {
             if (err) {
                 console.log(err);
                 reject(err);
             } else {
-                console.log(rowCount + ' rows');
-                console.log(rows);
-                response = rows;
+                resolve(rows);
             }
         });
 
@@ -114,11 +129,6 @@ function execSql(sqlString) {
             } else {
                 connection.execSql(request);
             }
-        })
-
-        request.on('done', function () {
-            connection.close();
-            resolve(response);
         })
     })
 }
