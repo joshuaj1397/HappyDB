@@ -16,7 +16,7 @@ var config = {
     },
     options: {
         instanceName: 'SQLEXPRESS',
-        database: 'TestDatabase',
+        database: 'Happy',
         rowCollectionOnRequestCompletion: true,
         useColumnNames: true,
         encrypt: false
@@ -29,7 +29,7 @@ app.get('/mutateData', (req, res) => { mutate.readCountries() });
 
 // get 2015data by country name
 app.get('/2015data/:countryName', function (req, res) {
-    row = execSql(`SELECT * FROM TestTable WHERE colfour='${req.params.countryName}'`);
+    row = execSql(`SELECT * FROM HappyData WHERE DataYear = 2015 AND countryId IN (SELECT ID FROM Country WHERE Name = '${req.params.countryName}')`);
     res.send(row)
 })
 
@@ -49,6 +49,7 @@ app.listen(port, () => console.log(`I'll be right by your side till ${port}`));
 
 // make a sql reauest
 function execSql(sqlString) {
+    console.log(sqlString)
     var connection = new Connection(config);
     var response;
     var request = new Request(sqlString, function (err, rowCount, rows) {
