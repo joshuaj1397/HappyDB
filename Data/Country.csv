@@ -1,4 +1,4 @@
-ID,Region_ID,Country
+﻿ID,Region ID,Country
 1,100,Switzerland
 2,100,Iceland
 3,100,Denmark
@@ -162,5 +162,3 @@ ID,Region_ID,Country
 161,104,Puerto Rico
 162,109,Namibia
 163,109,South Sudan
-164,107,Taiwan Province of China
-165,105,"Hong Kong S.A.R., China"
