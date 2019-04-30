@@ -1,5 +1,6 @@
 const express = require('express');
 const mutate = require('./mutateData.js');
+const path = require('path');
 const app = express();
 const port = 3005;
 var Connection = require('tedious').Connection;
@@ -23,13 +24,13 @@ var config = {
     }
 };
 
-
-app.get('/', (req, res) => res.send('Hello World'));
+app.use('/static', express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => res.sendFile('Hello World! Also go to whatever the url + /static'));
 app.get('/mutateData', (req, res) => { mutate.readCountries() });
 
 function pruneCountryRegion(data) {
     data.forEach(function (column) {
-        for (prop in column) { 
+        for (prop in column) {
             delete column[prop].metadata
         }
     })
@@ -38,7 +39,7 @@ function pruneCountryRegion(data) {
 
 function pruneData(data) {
     data.forEach(function (column) {
-        for (prop in column) { 
+        for (prop in column) {
             delete column[prop].metadata
         }
     })
