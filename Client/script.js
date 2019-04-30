@@ -31,4 +31,24 @@ const HappyAPI = {
       )
   },
 
+  getCountryById: function(id) {
+    fetch(baseUrl + '/country/' + id)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          return result;
+        }
+      )
+  },
+
+  getRegionById: function(id) {
+    fetch(baseUrl + '/region/' + id)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          return result;
+        }
+      )
+  },
+
 }
