@@ -6,16 +6,16 @@ var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 
 var config = {
-    server: 'DESKTOP-02JLIOA',
+    server: process.env.server,
     authentication: {
         type: 'default',
         options: {
-            userName: 'test',
-            password: 'asdf'
+            userName: process.env.username,
+            password: process.env.password
         }
     },
     options: {
-        instanceName: 'SQLEXPRESS',
+        instanceName: process.env.instance,
         database: 'Happy',
         rowCollectionOnRequestCompletion: true,
         useColumnNames: true,
@@ -23,13 +23,9 @@ var config = {
     }
 };
 
-
-app.get('/', (req, res) => res.send('Hello World'));
-app.get('/mutateData', (req, res) => { mutate.readCountries() });
-
 function pruneCountryRegion(data) {
     data.forEach(function (column) {
-        for (prop in column) { 
+        for (prop in column) {
             delete column[prop].metadata
         }
     })
@@ -38,12 +34,15 @@ function pruneCountryRegion(data) {
 
 function pruneData(data) {
     data.forEach(function (column) {
-        for (prop in column) { 
+        for (prop in column) {
             delete column[prop].metadata
         }
     })
     return data[0]
 }
+
+app.get('/', (req, res) => res.send('Hello World'));
+app.get('/mutateData', (req, res) => { mutate.readCountries() });
 
 // get 2015data by country name
 app.get('/2015data/:countryName', function (req, res) {

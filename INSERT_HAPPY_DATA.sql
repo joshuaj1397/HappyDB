@@ -1,7 +1,7 @@
 USE Happy
 
 BULK INSERT dbo.Region
-    FROM '**\Data\Region.csv'
+    FROM 'C:\Users\xzoti\projects\HappyDB\Data\Region.csv'
     WITH
     (
 	CHECK_CONSTRAINTS,
@@ -9,9 +9,9 @@ BULK INSERT dbo.Region
 	FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n'   --Use to shift the control to next row
 	)
-	
+
 BULK INSERT dbo.Country
-    FROM '**\Data\Country.csv'
+    FROM 'C:\Users\xzoti\projects\HappyDB\Data\Country.csv'
     WITH
     (
 	CHECK_CONSTRAINTS,
@@ -21,7 +21,7 @@ BULK INSERT dbo.Country
 	)
 
 BULK INSERT dbo.HappyData
-    FROM '**\Data\2015.csv'
+    FROM 'C:\Users\xzoti\projects\HappyDB\Data\2015.csv'
     WITH
     (
 	CHECK_CONSTRAINTS,
@@ -31,7 +31,7 @@ BULK INSERT dbo.HappyData
 	)
 
 BULK INSERT dbo.HappyData
-    FROM '**\Data\2016.csv'
+    FROM 'C:\Users\xzoti\projects\HappyDB\Data\2016.csv'
     WITH
     (
 	CHECK_CONSTRAINTS,
@@ -41,7 +41,7 @@ BULK INSERT dbo.HappyData
 	)
 
 BULK INSERT dbo.HappyData
-    FROM '**\Data\2017.csv'
+    FROM 'C:\Users\xzoti\projects\HappyDB\Data\2017.csv'
     WITH
     (
 	CHECK_CONSTRAINTS,
@@ -49,4 +49,3 @@ BULK INSERT dbo.HappyData
 	FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n'   --Use to shift the control to next row
 	)
-
