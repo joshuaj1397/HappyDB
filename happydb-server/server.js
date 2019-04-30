@@ -1,4 +1,5 @@
 const express = require('express');
+const mutate = require('./mutateData.js');
 const app = express();
 const port = 3005;
 var Connection = require('tedious').Connection;
@@ -24,6 +25,7 @@ var config = {
 
 
 app.get('/', (req, res) => res.send('Hello World'));
+app.get('/mutateData', (req, res) => { mutate.readCountries() });
 
 // get 2015data by country name
 app.get('/2015data/:countryName', function (req, res) {
