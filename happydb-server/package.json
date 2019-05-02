@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "fmt": "prettier --write '**/*.{jsx,js}'"
+    "fmt": "prettier --write '*.{jsx,js}'"
   },
   "prettier": {
     "trailingComma": "all",
