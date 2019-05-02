@@ -1,4 +1,9 @@
-const baseUrl = 'http://localhost:3005'
+// The div for tooltips
+var div = d3
+  .select('body')
+  .append('div')
+  .attr('class', 'tooltip')
+  .style('opacity', 0)
 
 // The svg
 var svg = d3.select('svg'),
@@ -45,7 +50,7 @@ svg.select('.legendThreshold').call(legend)
 // Load external data and boot
 d3.queue()
   .defer(d3.json, 'http://enjalot.github.io/wwsd/data/world/world-110m.geojson')
-  .defer(d3.csv, 'mooc-countries.csv', function(d) {
+  .defer(d3.json, 'http://localhost:3005/countries', function(d) {
     data.set(d.code, +d.total)
   })
   .await(ready)
@@ -56,7 +61,7 @@ function ready(error, topo) {
   // Draw the map
   svg
     .append('g')
-    .attr('class', 'countries')
+    .attr('class', 'country')
     .selectAll('path')
     .data(topo.features)
     .enter()
@@ -67,5 +72,25 @@ function ready(error, topo) {
       // Set the color
       return colorScale(d.total)
     })
+    .on('mouseover', function(d) {
+      renderInfo(d)
+    })
+    .on('mouseout', function(d) {
+      div
+        .transition()
+        .duration(500)
+        .style('opacity', 0)
+    })
     .attr('d', path)
+}
+
+function renderInfo(d) {
+  div
+    .transition()
+    .duration(200)
+    .style('opacity', 0.9)
+  div
+    .html(d.id + '<br/>' + d.total)
+    .style('left', d3.event.pageX + 'px')
+    .style('top', d3.event.pageY - 28 + 'px')
 }

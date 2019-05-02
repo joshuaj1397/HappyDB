@@ -138,6 +138,21 @@ app.get('/region/:regionId', function(req, res) {
   )
 })
 
+// get all countries
+app.get('/countries', function(req, res) {
+  dataPromise = execSql(`SELECT * FROM Country`)
+  dataPromise.then(
+    function(result) {
+      data = pruneCountryRegion(result)
+      cb = res.send.bind(res)
+      cb({ data })
+    },
+    function(err) {
+      console.log(err)
+    },
+  )
+})
+
 app.listen(port, () => console.log(`I'll be right by your side till ${port}`))
 
 // make a sql reauest
