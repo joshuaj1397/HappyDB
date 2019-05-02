@@ -1,3 +1,11 @@
+var selectedYear = '2015'
+
+document
+  .getElementByClassName('yearSelect')
+  .addEventListener('onchange', function(e) {
+    selectedYear = $('input:checked').value
+  })
+
 // The div for tooltips
 var div = d3
   .select('body')
@@ -20,11 +28,11 @@ var path = d3.geoPath().projection(projection)
 
 // Data and color scale
 var data = d3.map()
-var colorScheme = d3.schemeGreens[6]
+var colorScheme = d3.schemeGreens[3]
 colorScheme.unshift('#eee')
 var colorScale = d3
   .scaleThreshold()
-  .domain([1, 6, 11, 26, 101, 1001])
+  .domain([4, 5, 7, 9])
   .range(colorScheme)
 
 // Legend
@@ -37,7 +45,7 @@ g.append('text')
   .attr('x', 0)
   .attr('y', -6)
   .text('Scale')
-var labels = ['0', '1-5', '6-10', '11-25', '26-100', '101-1000', '> 1000']
+var labels = ['2-3', '3-4', '5-6', '7-8']
 var legend = d3
   .legendColor()
   .labels(function(d) {
@@ -50,7 +58,7 @@ svg.select('.legendThreshold').call(legend)
 // Load external data and boot
 d3.queue()
   .defer(d3.json, 'http://enjalot.github.io/wwsd/data/world/world-110m.geojson')
-  .defer(d3.json, 'http://localhost:3005/countries', function(d) {
+  .defer(d3.csv, 'mooc-countries.csv', function(d) {
     data.set(d.code, +d.total)
   })
   .await(ready)
@@ -76,6 +84,7 @@ function ready(error, topo) {
       renderInfo(d)
     })
     .on('mouseout', function(d) {
+      console.log(d)
       div
         .transition()
         .duration(500)
@@ -84,7 +93,7 @@ function ready(error, topo) {
     .attr('d', path)
 }
 
-function renderInfo(d) {
+async function renderInfo(d) {
   div
     .transition()
     .duration(200)

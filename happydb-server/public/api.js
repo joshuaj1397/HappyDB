@@ -24,5 +24,3 @@ const HappyAPI = {
     return await res.json()
   },
 }
-
-export default HappyAPI
