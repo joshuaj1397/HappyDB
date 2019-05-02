@@ -1,10 +1,10 @@
 var selectedYear = '2015'
 
-document
-  .getElementByClassName('yearSelect')
-  .addEventListener('onchange', function(e) {
-    selectedYear = $('input:checked').value
-  })
+// document
+//   .getElementByClassName('yearSelect')
+//   .addEventListener('onchange', function(e) {
+//     selectedYear = $('input:checked').value
+//   })
 
 // The div for tooltips
 var div = d3
